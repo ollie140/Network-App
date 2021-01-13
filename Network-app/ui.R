@@ -14,50 +14,41 @@ library(igraph)
 library(shinyWidgets)
 library(shinyjqui)
 
-# Define UI for application that draws a histogram
-shinyUI(fluidPage(
-    useShinydashboard(),
-    # Application title
-    titlePanel("Random Network"),
-    
-    # Sidebar with a slider input for number of nodes and edges
-    sidebarLayout(
-        sidebarPanel(
-            sliderInput(
-                "nodes",
-                "Number of Nodes:",
-                min = 1,
-                max = 50,
-                value = 30
-            ),
-            sliderInput(
-                "edges",
-                "Number of Edges:",
-                min = 1,
-                max = 100,
-                value = 30
-            )
-        ),
-        
-        # Show a plot of the generated network
-        mainPanel(jqui_resizable(
-            box(
-                visNetworkOutput("graphPlot"),
-                solidHeader = T,
-                status = "primary",
-                width = "100%",
-                height = "100%",
-                title = "Test box",
-                collapsible = T,
-                collapsed = F
-            )
-        ))
+
+sidebar <- dashboardSidebar(
+    sliderInput(
+        "nodes",
+        "Number of Nodes:",
+        min = 1,
+        max = 50,
+        value = 30
+    ),
+    sliderInput(
+        "edges",
+        "Number of Edges:",
+        min = 1,
+        max = 100,
+        value = 30
+    ),
+    actionButton(inputId = "updateGraph", label = "Update graph")
+)
+
+body <- dashboardBody(
+    actionButton(
+        inputId = "toggle",
+        label = "Hide/Show"
+    ),
+    div(
+        id = "graphPlotDiv",
+        style = 'width: 400px; height: 400px',
+        visNetworkOutput('graphPlot', width = '100%', height = '100%')
     )
-))
+)
 
-
-
-# Limit the resizable element to a maximum or minimum height or width
-#jqui_resizable('#foo', options = list(minHeight = 100, maxHeight = 300,
- #                                     minWidth = 200, maxWidth = 400))
-
+dashboardPage(
+    dashboardHeader(
+        title = "Graph Plot Test"
+    ),
+    sidebar,
+    body
+)
