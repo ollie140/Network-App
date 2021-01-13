@@ -12,14 +12,14 @@ library(shiny)
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
 
-    output$graphPlot <- renderPlot({
+    output$graphPlot <- renderVisNetwork({
 
         # generate nodes based on input$nodes from ui.R
-        x    <- faithful[, 2]
-        nodes <- seq(min(x), max(x), length.out = input$nodes + 1)
+        x  <- erdos.renyi.game(input$nodes, input$edges, type = "gnm")
 
-        # draw the histogram with the specified number of nodes
-        hist(x, breaks = nodes, col = 'darkgray', border = 'white')
+        # draw the network with the specified number of nodes
+        #plot(x, vertex.label= NA, edge.arrow.size= 0.02, vertex.size = 0.5, xlab = "Random Network: G(N,L) model")
+        visIgraph(x)
 
     })
 
