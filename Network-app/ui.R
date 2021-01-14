@@ -34,16 +34,13 @@ sidebar <- dashboardSidebar(
 )
 
 body <- dashboardBody(
-    actionButton(
-        inputId = "toggle",
-        label = "Hide/Show"
-    ),
-    div(
+        div(box(
         id = "graphPlotDiv",
         style = 'width: 400px; height: 400px',
-        visNetworkOutput('graphPlot', width = '100%', height = '100%')
+        visNetworkOutput('graphPlot', width = "100%", height = "100%"),
+        title = "Test box", width = "100%", height = '100%', collapsible = T, collapsed = T))
     )
-)
+
 
 dashboardPage(
     dashboardHeader(

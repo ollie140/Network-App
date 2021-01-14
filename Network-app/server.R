@@ -19,16 +19,12 @@ shinyServer(function(input, output) {
         )
     )
     
-    observeEvent(input$toggle, {
-        jqui_toggle('#graphPlotDiv', effect = "blind")
-    })
-    
-    observeEvent(input$updateGraph, {
+    #observeEvent(input$updateGraph, { ##isolate the input if we dont want graph to update dynamically
         output$graphPlot <- renderVisNetwork({
             # generate nodes based on input$nodes from ui.R
             x  <- erdos.renyi.game(
-                isolate(input$nodes),
-                isolate(input$edges),
+                input$nodes,
+                input$edges,
                 type = "gnm"
             )
             
@@ -36,5 +32,5 @@ shinyServer(function(input, output) {
             #plot(x, vertex.label= NA, edge.arrow.size= 0.02, vertex.size = 0.5, xlab = "Random Network: G(N,L) model")
             visIgraph(x)
         })
-    })
+    #})
 })
