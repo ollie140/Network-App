@@ -30,22 +30,23 @@ sidebar <- dashboardSidebar(
         max = 100,
         value = 30
     ),
-    actionButton(inputId = "updateGraph", label = "Update graph")
+    actionButton(inputId = "saveGraph", label = "Save graph")
 )
 
-body <- dashboardBody(
-        div(box(
+body <- dashboardBody(div(
+    box(
         id = "graphPlotDiv",
-        style = 'width: 400px; height: 400px',
+        style = 'width: 100%; height: 400px',
         visNetworkOutput('graphPlot', width = "100%", height = "100%"),
-        title = "Test box", width = "100%", height = '100%', collapsible = T, collapsed = T))
+        title = "Test box",
+        width = "100%",
+        height = '100%',
+        collapsible = T,
+        collapsed = F
     )
+))
 
 
-dashboardPage(
-    dashboardHeader(
-        title = "Graph Plot Test"
-    ),
-    sidebar,
-    body
-)
+dashboardPage(dashboardHeader(title = "Graph Plot Test"),
+              sidebar,
+              body)

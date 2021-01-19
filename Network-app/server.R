@@ -19,18 +19,20 @@ shinyServer(function(input, output) {
         )
     )
     
-    #observeEvent(input$updateGraph, { ##isolate the input if we dont want graph to update dynamically
         output$graphPlot <- renderVisNetwork({
             # generate nodes based on input$nodes from ui.R
-            x  <- erdos.renyi.game(
+            randNetwork  <- erdos.renyi.game(
                 input$nodes,
                 input$edges,
                 type = "gnm"
             )
             
             # draw the network with the specified number of nodes
-            #plot(x, vertex.label= NA, edge.arrow.size= 0.02, vertex.size = 0.5, xlab = "Random Network: G(N,L) model")
-            visIgraph(x)
+            visIgraph(randNetwork)
         })
-    #})
+        
+        ##doesnt work, use reactive function: https://stackoverflow.com/questions/52029794/r-shiny-saving-reactive-ggplots
+#        eventReactive(input$saveGraph, { ##isolate the input if we dont want graph to update dynamically
+#            htmlwidgets::saveWidget(randNetwork, "network.html")
+#        })
 })
